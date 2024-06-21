@@ -1,0 +1,35 @@
+CXX := g++
+CXXFLAGS := -std=c++11 -Wall -Wextra -Iinclude
+LDFLAGS :=
+SRC_DIR := src
+BUILD_DIR := build
+TARGET := myprogram
+
+SRCS := $(wildcard $(SRC_DIR)/*.cpp)
+OBJS := $(SRCS:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
+DEPS := $(OBJS:.o=.d)
+
+all: $(BUILD_DIR)/$(TARGET)
+
+$(BUILD_DIR)/%.d: $(SRC_DIR)/%.cpp | $(BUILD_DIR)
+	@$(CXX) $(CXXFLAGS) -MM -MT '$(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$<)' $< -MF $@
+
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(BUILD_DIR)/%.d | $(BUILD_DIR)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/$(TARGET): $(OBJS) | $(BUILD_DIR)
+	$(CXX) $(LDFLAGS) $^ -o $@
+
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
+
+-include $(DEPS)
+
+clean:
+	rm -rf $(BUILD_DIR)
+
+.PHONY: all clean
+
+
+# Dependency Management:
+# Each .cpp file has a corresponding .d (dependency) file which lists its header dependencies.
