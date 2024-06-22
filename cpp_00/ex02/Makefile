@@ -1,11 +1,11 @@
 CXX := g++
 CXXFLAGS := -Wall -Wextra -Werror -std=c++98
 
-SRCS := PhoneBook.cpp utils.cpp getint.cpp
+SRCS := Account.cpp tests.cpp
 OBJS := $(SRCS:%.cpp=%.o)
-INCLUDE := header.hpp PhoneBook.hpp Contact.hpp
+INCLUDE := Account.hpp
 
-NAME := phonebook
+NAME := tests
 
 all: $(NAME)
 
