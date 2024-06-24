@@ -7,6 +7,7 @@
 #include <sstream>
 #include <limits>
 #include <iomanip>
+#include <cstdlib>
 
 // std::string formating(std::string str);
 std::string int_to_string(int num);

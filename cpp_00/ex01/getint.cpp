@@ -17,13 +17,6 @@ bool is_integer(const std::string& str)
     return true;
 }
 
-// std::cin.clear();
-// std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-// std::stringstream ss(input);
-// int num = 0;
-// ss >> num;
-
 int atoi(const std::string& str)
 {
 	bool negate = !(str[0] == '-');
@@ -32,7 +25,7 @@ int atoi(const std::string& str)
 	int result = 0;
 
 	if (str[0] == '+' || str[0] == '-' ) ++i;
-	while(i < len)
+	while(i < len && std::isdigit(str[i]))
 		result = result * 10  + (str[i++] - '0');
 	return negate ? result : -result;
 }
@@ -45,6 +38,11 @@ int get_int(const std::string& str)
 	{
 		std::cout << str;
 		std::getline(std::cin, input);
+		if (std::cin.eof())
+		{
+			std::cout << std::endl;
+			exit(0);
+		}
 		if (!is_integer(input)) 
 			std::cout << "Invalid input. Please enter an integer.\n";
 		else

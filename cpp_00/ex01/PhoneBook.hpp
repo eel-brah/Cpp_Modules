@@ -7,6 +7,15 @@ class PhoneBook
 		Contact contacts[8];
 		unsigned short size;
 		unsigned short pos;
+
+		void print_a_contact(unsigned short index)
+		{
+			if (index >= size)
+				std::cout << "Out of range\n";
+			else
+				contacts[index].print_a_contact();
+			std::cout << std::endl;
+		}
 	public:
 		PhoneBook()
 		{
@@ -21,7 +30,7 @@ class PhoneBook
 				pos = 0;
 			contacts[pos++] = contact;
 		}
-		void print_phone_book()
+		void phone_book_search()
 		{
 			std::cout << std::setw(10) << "Index" << "|" 
 						<< std::setw(10) << "First Name" << "|" 
@@ -30,12 +39,6 @@ class PhoneBook
 			// std::cout << "----------------------------------------------" << std::endl;
 			for (unsigned short i = 0; i < size; ++i)
 				contacts[i].print_row(i);
-		}
-		void print_a_contact(unsigned short index)
-		{
-			if (index >= size)
-				std::cout << "Out of range\n\n";
-			else
-				contacts[index].print_a_contact();
+			print_a_contact(get_int("Choose an index (from 0 to 7): "));
 		}
 };
