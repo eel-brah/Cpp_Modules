@@ -1,0 +1,5 @@
+test1 "Hello" "Bonjour"
+test2 "quick" "slow"
+test3 "here" "there"
+test4 "this" "that"
+test5 "a" "X"
