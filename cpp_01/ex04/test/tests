@@ -1,5 +1,8 @@
-test1 "Hello" "Bonjour"
-test2 "quick" "slow"
-test3 "here" "there"
-test4 "this" "that"
-test5 "a" "X"
+test1 world universe
+test2 foo baz
+test3 short muchlongertext
+test4 spaces ""
+test5 partial full
+
+test6 partial full
+test1 "" full

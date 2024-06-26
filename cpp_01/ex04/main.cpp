@@ -2,6 +2,7 @@
 #include <fstream>
 #include <cstring>
 #include <sstream>
+#include <cstdlib>
 
 std::string read_file_to_str(const char* filename)
 {
@@ -9,7 +10,7 @@ std::string read_file_to_str(const char* filename)
     if (!input_file)
     {
         std::cerr << "Error opening " << filename << std::endl;
-        return "";
+        std::exit(1);
     }
 
     input_file.seekg(0, std::ios::end);
@@ -22,11 +23,25 @@ std::string read_file_to_str(const char* filename)
     {
         std::cerr << "Could not read file " << filename << std::endl;
         input_file.close();
-		return "";
+		std::exit(1);
     }
 
 	input_file.close();
     return str;
+}
+
+void replace(std::ofstream& output_file, std::string str, char *s1, char *s2)
+{
+	size_t s1_len = std::strlen(s1); // 0
+	size_t pos = 0;
+
+	while ((pos = str.find(s1, pos)) != std::string::npos && s1_len)
+	{
+		output_file << str.substr(0, pos) << s2; 
+		str = str.substr(pos + s1_len);
+		pos = 0;
+	}
+	output_file << str;
 }
 
 int main(int argc, char **argv)
@@ -38,78 +53,14 @@ int main(int argc, char **argv)
 	}
 
 	std::string str = read_file_to_str(argv[1]);
-
-	std::string new_file = std::string(argv[1]) + ".replace";
-	std::ofstream output_file(new_file);
+	std::string output_name = std::string(argv[1]) + ".replace";
+	std::ofstream output_file(output_name.c_str());
     if (!output_file)
 	{
         std::cerr << "Error opening " << argv[2] << std::endl;
         return 1;
     }
 
-	size_t s1_len = std::strlen(argv[2]); // 0
-	size_t s2_len = std::strlen(argv[3]); // 0
-	size_t pos = 0;
-
-	while ((pos = str.find(argv[2], pos)) != std::string::npos)
-	{
-		output_file << str.substr(0, pos) << argv[3]; 
-		str = str.substr(pos + s1_len);
-		pos = 0;
-	}
-
-	output_file << str;
-
+	replace(output_file, str, argv[2], argv[3]);
 	output_file.close();
 }
-
-// #include <iostream>
-// #include <fstream>
-// #include <cstring>
-// #include <sstream>
-
-
-// int main(int argc, char **argv)
-// {
-// 	if (argc != 4)
-// 	{
-// 		std::cerr << "Usage: " << argv[0] << " filename s1 s2\n";
-// 		return 1;
-// 	}
-
-// 	std::ifstream input_file(argv[1]);
-//     if (!input_file)
-// 	{
-//         std::cerr << "Error opening " << argv[1] << std::endl;
-//         return 1;
-//     }
-
-// 	std::ofstream output_file(argv[2]);
-//     if (!output_file)
-// 	{
-//         std::cerr << "Error opening " << argv[2] << std::endl;
-//         return 1;
-//     }
-
-
-// 	size_t s1_len = std::strlen(argv[2]); // 0
-// 	size_t s2_len = std::strlen(argv[3]); // 0
-// 	size_t pos = 0;
-
-// 	std::string line;
-//     while (std::getline(input_file, line))
-// 	{
-// 		pos = 0;
-// 		while ((pos = line.find(argv[2], pos)) != std::string::npos)
-// 		{
-//             output_file << line.substr(0, pos) << argv[3]; 
-//             line = line.substr(pos + s1_len);
-// 			pos = 0;
-//         }
-
-//         output_file << line << std::endl;
-//     }
-
-// 	input_file.close();
-// 	output_file.close();
-// }
