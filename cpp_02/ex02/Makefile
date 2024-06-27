@@ -1,11 +1,11 @@
 CXX := g++
 CXXFLAGS := -Wall -Wextra -Werror -std=c++98
 
-SRCS := PhoneBook.cpp utils.cpp getint.cpp
+SRCS := main.cpp Fixed.cpp
 OBJS := $(SRCS:%.cpp=%.o)
-INCLUDE := header.hpp PhoneBook.hpp Contact.hpp
+INCLUDE := Fixed.hpp
 
-NAME := phonebook
+NAME := fixed
 
 all: $(NAME)
 

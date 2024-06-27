@@ -28,7 +28,9 @@ $(BUILD_DIR):
 clean:
 	rm -rf $(BUILD_DIR)
 
-.PHONY: all clean
+re: fclean all
+
+.PHONY: all clean fclean re
 
 
 # Dependency Management:
