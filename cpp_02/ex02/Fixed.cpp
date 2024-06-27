@@ -102,28 +102,37 @@ bool Fixed::operator!=(const Fixed &fixed) const
 Fixed Fixed::operator+(const Fixed &fixed)
 {
 	// return  static_cast<float>(this->nb + fixed.getRawBits()) / (1 << fractional);
-	return Fixed(this->toFloat() + fixed.toFloat());
-	// return  Fixed(this->nb + fixed.getRawBits());
+	// return Fixed(this->toFloat() + fixed.toFloat());
+	Fixed tmp;
+	tmp.setRawBits(nb + fixed.getRawBits());
+	return tmp;
 }
 
 Fixed Fixed::operator-(const Fixed &fixed)
 {
 	// return  static_cast<float>(this->nb - fixed.getRawBits()) / (1 << fractional);
-	return Fixed(this->toFloat() - fixed.toFloat());
-	// return  Fixed(this->nb - fixed.getRawBits());
+	// return Fixed(this->toFloat() - fixed.toFloat());
+	Fixed tmp;
+	tmp.setRawBits(nb - fixed.getRawBits());
+	return tmp;
 }
 
 Fixed Fixed::operator*(const Fixed &fixed)
 {
-	// return  Fixed(static_cast<int>((static_cast<unsigned long>(this->nb) * fixed.getRawBits()) >> fractional));
+	Fixed tmp;
+	tmp.setRawBits((static_cast<unsigned long>(nb) * fixed.getRawBits()) >> fractional);
+	return tmp;	
 	// return static_cast<float>((this->nb * fixed.getRawBits()) >> this->fractional) / (1 << fractional);
-	return Fixed(this->toFloat() * fixed.toFloat());
+	// return Fixed(this->toFloat() * fixed.toFloat());
 }
 
 Fixed Fixed::operator/(const Fixed &fixed)
 {
-	return Fixed(this->toFloat() / fixed.toFloat());
-	// return  Fixed(this->nb / fixed.getRawBits());
+	// return Fixed(this->toFloat() / fixed.toFloat());
+	// return Fixed (static_cast<float>(this->nb) / fixed.getRawBits());
+	Fixed tmp;
+	tmp.setRawBits((nb << fractional) / fixed.getRawBits());
+	return tmp;	
 }
 
 // Increment/Decrement

@@ -48,6 +48,11 @@ void run_tests()
 
 int main()
 {
-    run_tests();
+    // run_tests();
+	Fixed a(5);
+	Fixed b(2);
+	Fixed c(10);
+	Fixed d(3);
+	std::cout << (a+b) / d << std::endl;
     return 0;
 }
