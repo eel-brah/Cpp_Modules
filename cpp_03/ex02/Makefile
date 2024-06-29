@@ -1,11 +1,11 @@
 CXX := g++
 CXXFLAGS := -Wall -Wextra -Werror -std=c++98
 
-SRCS := main.cpp Fixed.cpp Point.cpp bsp.cpp
+SRCS := main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp
 OBJS := $(SRCS:%.cpp=%.o)
-INCLUDE := Fixed.hpp Point.hpp
+INCLUDE := ClapTrap.hpp ScavTrap.hpp FragTrap.hpp
 
-NAME := bsp
+NAME := fragtrap
 
 all: $(NAME)
 
