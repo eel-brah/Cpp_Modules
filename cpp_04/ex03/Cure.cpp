@@ -1,20 +1,15 @@
 #include "Cure.hpp"
+#include "Character.hpp"
 
-Cure::Cure(): AMateria("ice")
-{}
+Cure::Cure(): AMateria("cure") {}
 
-Cure::~Cure()
-{}
+Cure::~Cure() {}
 
-Cure::Cure(const Cure& other): AMateria(other)
-{}
+Cure::Cure(const Cure& other): AMateria(other) {}
 
 Cure& Cure::operator=(const Cure& other)
 {
-	// if (this != &other)
-	// {
-	// 	AMateria::operator=(other);
-	// }
+	(void) other;
 	return *this;
 }
 
@@ -34,5 +29,5 @@ AMateria* Cure::clone() const
 
 void Cure::use(ICharacter& target)
 {
-	std::cout << "* heals " << target.name << "’s wounds *";
+	std::cout << "* heals " << target.getName() << "’s wounds *" << std::endl;
 }

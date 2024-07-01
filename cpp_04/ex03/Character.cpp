@@ -1,6 +1,6 @@
 #include "Character.hpp"
 
-Character::Character(): name("Unkown"), inv_size(0)
+Character::Character(): name("Unkown")
 {
 	for (int i = 0; i < MAX_SIZE; i++)
 	{
@@ -9,7 +9,7 @@ Character::Character(): name("Unkown"), inv_size(0)
 	}
 }
 
-Character::Character(std::string const& name): name(name), inv_size(0)
+Character::Character(std::string const& name): name(name)
 {
 	for (int i = 0; i < MAX_SIZE; i++)
 	{
@@ -21,7 +21,6 @@ Character::Character(std::string const& name): name(name), inv_size(0)
 Character::Character(const Character& other)
 {
 	name = other.name;
-	// inv_size = 0;
 	try
 	{
 		for (int i = 0; i < MAX_SIZE; i++)
@@ -36,7 +35,6 @@ Character::Character(const Character& other)
 				inventory[i] = new Cure();
 				equipted[i] = other.equipted[i];
 			}
-			// inv_size++;
 		}
 	}
 	catch (const std::bad_alloc& e)
@@ -47,7 +45,6 @@ Character::Character(const Character& other)
 			delete inventory[i];
 			inventory[i] = NULL;
 		}
-		// inv_size = 0;
 		std::cerr << "Memory allocation failed: " << e.what() << std::endl;
 	}
 }
@@ -64,13 +61,12 @@ Character& Character::operator=(const Character& other)
 	{
 		name = other.name;
 		int i;
-		for (i = 0; i < inv_size; i++)
+		for (i = 0; i < MAX_SIZE; i++)
 		{
 			equipted[i] = 0;
 			delete inventory[i];
 			inventory[i] = NULL;
 		}
-		// inv_size = 0;
 		try
 		{
 			for (i = 0; i < MAX_SIZE; i++)
@@ -85,7 +81,6 @@ Character& Character::operator=(const Character& other)
 					inventory[i] = new Cure();
 					equipted[i] = other.equipted[i];
 				}
-				// inv_size++;
 			}
 		}
 		catch (const std::bad_alloc& e)
@@ -96,7 +91,6 @@ Character& Character::operator=(const Character& other)
 				delete inventory[i];
 				inventory[i] = NULL;
 			}
-			// inv_size = 0;
 			std::cerr << "Memory allocation failed: " << e.what() << std::endl;
 		}
 	}
@@ -111,10 +105,13 @@ std::string const & Character::getName() const
 void Character::equip(AMateria* m)
 {
 	for (int i = 0; i < MAX_SIZE; i++)
-		if (!equipted[i])
+		if (!equipted[i] && m)
 		{
-			free(inventory[i]);
-			inventory[i] = m;
+			delete inventory[i];
+			inventory[i] = m->clone();
+			if (inventory[i])
+				equipted[i] = 1;
+			break;
 		}
 }
 
@@ -126,6 +123,6 @@ void Character::unequip(int idx)
 
 void Character::use(int idx, ICharacter& target)
 {
-	if (idx < MAX_SIZE && equipted[idx])
+	if (idx < MAX_SIZE && equipted[idx] && inventory[idx])
 		inventory[idx]->use(target);
 }

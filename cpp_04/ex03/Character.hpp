@@ -4,16 +4,14 @@
 #include "ICharacter.hpp"
 #include "Ice.hpp"
 #include "Cure.hpp"
-#include <cstring>
 
-class Character
+class Character: public ICharacter
 {
 	private:
 		std::string name;
 		static const unsigned short MAX_SIZE = 4;
 		AMateria *inventory[MAX_SIZE];
 		bool equipted[4];
-		unsigned short inv_size;
 	public:
 		Character();
 		Character(std::string const& name);

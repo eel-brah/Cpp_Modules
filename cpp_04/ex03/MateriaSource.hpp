@@ -1,11 +1,11 @@
 #ifndef MATERIASOURCE_H_
 #define MATERIASOURCE_H_
 
-#include "AMateria.hpp"
+#include "IMateriaSource.hpp"
 #include "Ice.hpp"
 #include "Cure.hpp"
 
-class MateriaSource
+class MateriaSource: public IMateriaSource
 {
 	private:
 		static const unsigned short MAX_SIZE = 4;
