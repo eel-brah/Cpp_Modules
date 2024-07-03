@@ -57,6 +57,7 @@ MateriaSource& MateriaSource::operator=(const MateriaSource& other)
 
 void MateriaSource::learnMateria(AMateria* m)
 {
+	// check if m already exist to avoid double free
 	if (size < MAX_SIZE)
 		mantras[size++] = m;
 	else 
