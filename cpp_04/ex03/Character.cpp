@@ -21,31 +21,27 @@ Character::Character(std::string const& name): name(name)
 Character::Character(const Character& other)
 {
 	name = other.name;
-	try
+	for (int i = 0; i < MAX_SIZE; i++)
 	{
-		for (int i = 0; i < MAX_SIZE; i++)
-		{
-			if (other.equipted[i] && other.inventory[i]->getType() == "ice")
-			{
-				inventory[i] = new Ice();
-				equipted[i] = other.equipted[i];
-			}
-			else if (other.equipted[i] && other.inventory[i]->getType() == "cure")
-			{
-				inventory[i] = new Cure();
-				equipted[i] = other.equipted[i];
-			}
-		}
+		equipted[i] = 0;
+		inventory[i] = NULL;
 	}
-	catch (const std::bad_alloc& e)
+	for (int i = 0; i < MAX_SIZE; i++)
 	{
-		for (int i = 0; i < MAX_SIZE; i++)
+		if (other.equipted[i])
 		{
-			equipted[i] = 0;
-			delete inventory[i];
-			inventory[i] = NULL;
+			inventory[i] = other.inventory[i]->clone();
+			if (!inventory[i])
+			{
+				for (int j = 0; j < MAX_SIZE; j++)
+				{
+					equipted[j] = 0;
+					delete inventory[j];
+					inventory[j] = NULL;
+				}
+			}
+			equipted[i] = other.equipted[i];
 		}
-		std::cerr << "Memory allocation failed: " << e.what() << std::endl;
 	}
 }
 
@@ -67,31 +63,22 @@ Character& Character::operator=(const Character& other)
 			delete inventory[i];
 			inventory[i] = NULL;
 		}
-		try
+		for (i = 0; i < MAX_SIZE; i++)
 		{
-			for (i = 0; i < MAX_SIZE; i++)
+			if (other.equipted[i])
 			{
-				if (other.equipted[i] && other.inventory[i]->getType() == "ice")
+				inventory[i] = other.inventory[i]->clone();
+				if (!inventory[i])
 				{
-					inventory[i] = new Ice();
-					equipted[i] = other.equipted[i];
+					for (int j = 0; j < MAX_SIZE; j++)
+					{
+						equipted[j] = 0;
+						delete inventory[j];
+						inventory[j] = NULL;
+					}
 				}
-				else if (other.equipted[i] && other.inventory[i]->getType() == "cure")
-				{
-					inventory[i] = new Cure();
-					equipted[i] = other.equipted[i];
-				}
+				equipted[i] = other.equipted[i];
 			}
-		}
-		catch (const std::bad_alloc& e)
-		{
-			for (i = 0; i < MAX_SIZE; i++)
-			{
-				equipted[i] = 0;
-				delete inventory[i];
-				inventory[i] = NULL;
-			}
-			std::cerr << "Memory allocation failed: " << e.what() << std::endl;
 		}
 	}
 	return *this;
@@ -106,12 +93,17 @@ void Character::equip(AMateria* m)
 {
 	for (int i = 0; i < MAX_SIZE; i++)
 	{
+		if (inventory[i] == m)
+			return;
+	}
+	for (int i = 0; i < MAX_SIZE; i++)
+	{
 		if (!equipted[i] && m)
 		{
 			delete inventory[i];
 			inventory[i] = m;
 			equipted[i] = 1;
-			break;
+			return;
 		}
 	}
 	delete m;
@@ -125,6 +117,6 @@ void Character::unequip(int idx)
 
 void Character::use(int idx, ICharacter& target)
 {
-	if (idx >= 0 && idx < MAX_SIZE && equipted[idx] && inventory[idx])
+	if (idx >= 0 && idx < MAX_SIZE && equipted[idx])
 		inventory[idx]->use(target);
 }

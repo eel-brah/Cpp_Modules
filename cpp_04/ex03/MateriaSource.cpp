@@ -5,23 +5,23 @@ MateriaSource::MateriaSource(): size(0)
 	for (int i = 0; i < MAX_SIZE; i++)
 		mantras[i] = NULL;
 }
+
 MateriaSource::MateriaSource(const MateriaSource& other)
 {
 	size = 0;
+	for (int i = 0; i < MAX_SIZE; i++)
+		mantras[i] = NULL;
 	for (int i = 0; i < other.size; i++)
 	{
-		if (other.mantras[i])
+		mantras[i] = other.mantras[i]->clone();
+		if (!mantras[i])
 		{
-			mantras[i] = other.mantras[i]->clone();
-			if (!mantras[i])
-			{
-				for (int j = 0; j < i; j++)
-					delete mantras[j];
-				size = 0;
-				break;
-			}
-			size++;
+			for (int j = 0; j < i; j++)
+				delete mantras[j];
+			size = 0;
+			break;
 		}
+		size++;
 	}
 }
 
@@ -37,7 +37,10 @@ MateriaSource& MateriaSource::operator=(const MateriaSource& other)
 	{
 		int i;
 		for (i = 0; i < size; i++)
+		{
 			delete mantras[i];
+			mantras[i] = NULL;
+		}
 		size = 0;
 		for (i = 0; i < other.size; i++)
 		{
@@ -45,7 +48,10 @@ MateriaSource& MateriaSource::operator=(const MateriaSource& other)
 			if (!mantras[i])
 			{
 				for (i = 0; i < size; i++)
+				{
 					delete mantras[i];
+					mantras[i] = NULL;
+				}
 				size = 0;
 				break;
 			}
@@ -57,8 +63,12 @@ MateriaSource& MateriaSource::operator=(const MateriaSource& other)
 
 void MateriaSource::learnMateria(AMateria* m)
 {
-	// check if m already exist to avoid double free
-	if (size < MAX_SIZE)
+	for (int i = 0; i < size; i++)
+	{
+		if (mantras[i] == m)
+			return;
+	}
+	if (size < MAX_SIZE && m)
 		mantras[size++] = m;
 	else 
 		delete m;

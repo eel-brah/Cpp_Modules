@@ -34,5 +34,7 @@ void Brain::add_idea(const std::string& idea)
 
 std::string Brain::get_idea(const unsigned int i)
 {
-	return ideas[i%100];
+	if (i < 100)
+		return ideas[i];
+	return "";
 }

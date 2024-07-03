@@ -47,24 +47,25 @@ void test_2()
 
 	std::cout << "<-- 1 -->\n";
 	a.use(1, b);
-	a.use(2, b);
+	a.use(0, b);
 	a.use(3, b);
 
 	std::cout << "<-- 2 -->\n";
-	a.equip(m2);
+	a.equip(m2->clone());
+	a.equip(m1->clone());
 	a.use(3, b);
 
-	a.equip(m2);
-	a.equip(m2);
-	a.equip(m2);
-	a.equip(m2);
+	a.equip(m2->clone());
+	a.equip(m2->clone());
+	a.equip(m2->clone());
+	a.equip(m2->clone());
 
 	std::cout << "<-- 3 -->\n";
 	a.unequip(1);
 	a.use(1, b);
 
 	std::cout << "<-- 4 -->\n";
-	a.equip(m1);
+	a.equip(m1->clone());
 	a.use(1, b);
 
 	Character c(a);
@@ -92,9 +93,6 @@ void test_2()
 	a.use(0, b);
 	a.use(1, b);
 	a.use(2, b);
-	
-	delete m1;
-	delete m2;
 }
 
 void test_3()
@@ -104,8 +102,16 @@ void test_3()
 	Character a("bob");
 	Character b("Alice");
 
-	src.learnMateria(new Ice());
-	src.learnMateria(new Cure());
+	AMateria *tmp = new Ice();
+	src.learnMateria(tmp);
+	src.learnMateria(tmp);
+	src.learnMateria(tmp);
+	tmp = new Cure();
+	src.learnMateria(tmp);
+	src.learnMateria(tmp);
+	src.learnMateria(tmp);
+	src.learnMateria(tmp);
+	src.learnMateria(tmp);
 
 	src_2 = src;
 	
@@ -131,7 +137,9 @@ void test_4()
 	tmp = src->createMateria("cure");
 	alice->equip(tmp);
 	alice->equip(tmp);
-	alice->equip(tmp);
+	alice->equip(tmp->clone());
+	alice->equip(tmp->clone());
+	alice->equip(tmp->clone());
 
 	ICharacter* bob = new Character("Bob");
 
@@ -139,6 +147,7 @@ void test_4()
 	alice->use(0, *bob);
 	alice->use(1, *bob);
 	alice->use(2, *bob);
+	alice->use(-22, *bob);
 	alice->use(55, *bob);
 
 	std::cout << "<-- 2 -->\n";
@@ -165,8 +174,9 @@ void test_4()
 int main()
 {
 	subjects_test();
-	// test_1();
-	// test_2();
-	// test_3();
-	// test_4();
+	test_1();
+	test_2();
+	test_3();
+	test_4();
+
 }
