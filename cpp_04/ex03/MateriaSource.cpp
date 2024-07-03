@@ -1,20 +1,27 @@
 #include "MateriaSource.hpp"
 
-MateriaSource::MateriaSource(): size(0) {}
+MateriaSource::MateriaSource(): size(0) 
+{
+	for (int i = 0; i < MAX_SIZE; i++)
+		mantras[i] = NULL;
+}
 MateriaSource::MateriaSource(const MateriaSource& other)
 {
 	size = 0;
 	for (int i = 0; i < other.size; i++)
 	{
-		mantras[i] = other.mantras[i]->clone();
-		if (!mantras[i])
+		if (other.mantras[i])
 		{
-			for (int j = 0; j < size; j++)
-				delete mantras[j];
-			size = 0;
-			break;
+			mantras[i] = other.mantras[i]->clone();
+			if (!mantras[i])
+			{
+				for (int j = 0; j < i; j++)
+					delete mantras[j];
+				size = 0;
+				break;
+			}
+			size++;
 		}
-		size++;
 	}
 }
 
@@ -52,6 +59,8 @@ void MateriaSource::learnMateria(AMateria* m)
 {
 	if (size < MAX_SIZE)
 		mantras[size++] = m;
+	else 
+		delete m;
 }
 
 AMateria* MateriaSource::createMateria(std::string const & type)
@@ -59,7 +68,7 @@ AMateria* MateriaSource::createMateria(std::string const & type)
 	for (int i = 0; i < size; i++)
 	{
 		if (mantras[i]->getType() == type)
-			return mantras[i];
+			return mantras[i]->clone();
 	}
 	return NULL;
 }

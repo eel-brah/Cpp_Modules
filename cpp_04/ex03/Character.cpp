@@ -105,24 +105,26 @@ std::string const & Character::getName() const
 void Character::equip(AMateria* m)
 {
 	for (int i = 0; i < MAX_SIZE; i++)
+	{
 		if (!equipted[i] && m)
 		{
 			delete inventory[i];
-			inventory[i] = m->clone();
-			if (inventory[i])
-				equipted[i] = 1;
+			inventory[i] = m;
+			equipted[i] = 1;
 			break;
 		}
+	}
+	delete m;
 }
 
 void Character::unequip(int idx)
 {
-	if (idx < MAX_SIZE)
-		equipted[idx] = 0; 
+	if (idx >= 0 && idx < MAX_SIZE)
+		equipted[idx] = 0;
 }
 
 void Character::use(int idx, ICharacter& target)
 {
-	if (idx < MAX_SIZE && equipted[idx] && inventory[idx])
+	if (idx >= 0 && idx < MAX_SIZE && equipted[idx] && inventory[idx])
 		inventory[idx]->use(target);
 }
