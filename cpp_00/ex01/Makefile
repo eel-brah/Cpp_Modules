@@ -1,7 +1,7 @@
 CXX := g++
 CXXFLAGS := -Wall -Wextra -Werror -std=c++98
 
-SRCS := PhoneBook.cpp utils.cpp getint.cpp
+SRCS := Contact.cpp main.cpp PhoneBook.cpp utils.cpp getint.cpp
 OBJS := $(SRCS:%.cpp=%.o)
 INCLUDE := header.hpp PhoneBook.hpp Contact.hpp
 
