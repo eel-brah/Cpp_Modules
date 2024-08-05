@@ -1,4 +1,4 @@
-CXX := g++
+CXX := c++
 CXXFLAGS := -std=c++11 -Wall -Wextra -Iinclude
 LDFLAGS :=
 SRC_DIR := src
@@ -18,7 +18,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(BUILD_DIR)/%.d | $(BUILD_DIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/$(TARGET): $(OBJS) | $(BUILD_DIR)
-	$(CXX) $(LDFLAGS) $^ -o $@
+	$(CXX) $(LDFLAGS) $(OBJS) -o $@
 
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)

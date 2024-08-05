@@ -1,4 +1,4 @@
-CXX := g++
+CXX := c++
 CXXFLAGS := -Wall -Wextra -Werror -std=c++98
 
 SRCS := megaphone.cpp
@@ -12,7 +12,7 @@ all: $(NAME)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(CXX) $(LDFLAGS) $^ -o $@
+	$(CXX) $(LDFLAGS) $(OBJS) -o $@
 
 clean:
 	rm -rf $(OBJS)

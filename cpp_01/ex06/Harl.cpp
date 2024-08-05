@@ -34,15 +34,12 @@ void Harl::harlFilter( std::string level )
 		case DEBUG:
 			std::cout << "[ " << levels[0] << " ]\n";
 			(this->*ptrs[DEBUG])();
-			// Fall through
 		case INFO:
 			std::cout << "[ " << levels[1] << " ]\n";
 			(this->*ptrs[INFO])();
-			// Fall through
 		case WARNING:
 			std::cout << "[ " << levels[2] << " ]\n";
 			(this->*ptrs[WARNING])();
-			// Fall through
 		case ERROR:
 			std::cout << "[ " << levels[3] << " ]\n";
 			(this->*ptrs[ERROR])();

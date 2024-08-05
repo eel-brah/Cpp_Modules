@@ -32,7 +32,7 @@ std::string read_file_to_str(const char* filename)
 
 void replace(std::ofstream& output_file, std::string str, char *s1, char *s2)
 {
-	size_t s1_len = std::strlen(s1); // 0
+	size_t s1_len = std::strlen(s1);
 	size_t pos = 0;
 
 	while ((pos = str.find(s1, pos)) != std::string::npos && s1_len)

@@ -1,4 +1,4 @@
-CXX := g++
+CXX := c++
 CXXFLAGS := -Wall -Wextra -Werror -std=c++98
 
 SRCS := main.cpp Animal.cpp Dog.cpp Cat.cpp WrongCat.cpp WrongAnimal.cpp Brain.cpp
@@ -13,7 +13,7 @@ all: $(NAME)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS) $(INCLUDE)
-	$(CXX) $(LDFLAGS) $^ -o $@
+	$(CXX) $(LDFLAGS) $(OBJS) -o $@
 
 clean:
 	rm -rf $(OBJS)

@@ -1,7 +1,7 @@
-CXX := g++
+CXX := c++
 CXXFLAGS := -Wall -Wextra -Werror -std=c++98
 
-SRCS := main.cpp Zombie.cpp newZombie.cpp randomChump.cpp
+SRCS :=  Zombie.cpp main.cpp randomChump.cpp newZombie.cpp
 OBJS := $(SRCS:%.cpp=%.o)
 INCLUDE := Zombie.hpp
 
@@ -13,7 +13,7 @@ all: $(NAME)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS) $(INCLUDE)
-	$(CXX) $(LDFLAGS) $^ -o $@
+	$(CXX) $(LDFLAGS) $(OBJS) -o $@
 
 clean:
 	rm -rf $(OBJS)

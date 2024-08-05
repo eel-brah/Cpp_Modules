@@ -19,7 +19,6 @@ class Harl
 		};
 		typedef void (Harl::*Ptrs)();
 	public:
-		void harlFilter( std::string level );
-		
+		void harlFilter( std::string level );		
 };
 #endif
