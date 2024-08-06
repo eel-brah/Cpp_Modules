@@ -26,6 +26,7 @@ int main( void ) {
 	Fixed d(5);
 	Fixed f(5.7f);
 	std::cout << d << std::endl;
+	std::cout << f << std::endl;
 	std::cout << ++f << std::endl;
 	std::cout << f + d << std::endl;
 	std::cout << f-d << std::endl;
@@ -33,5 +34,7 @@ int main( void ) {
 	std::cout << f/d << std::endl;
 	Fixed r =f/d;
 	std::cout << ++r << std::endl;
+	if (f >= d)
+		std::cout << true << std::endl;
 	return 0;
 }

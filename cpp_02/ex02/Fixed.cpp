@@ -27,10 +27,9 @@ Fixed::Fixed(const int i) : nb(i<<fractional)
 	// std::cout << "Int constructor called\n";
 }
 
-Fixed::Fixed(const float f)
+Fixed::Fixed(const float f) : nb(roundf(f * (1 << fractional)))
 {
 	// std::cout << "Float constructor called\n";
-	nb = roundf(f * (1 << fractional));
 }
 
 Fixed::Fixed(const Fixed& other)
@@ -113,8 +112,6 @@ bool Fixed::operator!=(const Fixed &fixed) const
 // Arithmetic
 Fixed Fixed::operator+(const Fixed &fixed)
 {
-	// return  static_cast<float>(this->nb + fixed.getRawBits()) / (1 << fractional);
-	// return Fixed(this->toFloat() + fixed.toFloat());
 	Fixed tmp;
 	tmp.setRawBits(nb + fixed.getRawBits());
 	return tmp;
@@ -122,8 +119,6 @@ Fixed Fixed::operator+(const Fixed &fixed)
 
 Fixed Fixed::operator-(const Fixed &fixed)
 {
-	// return  static_cast<float>(this->nb - fixed.getRawBits()) / (1 << fractional);
-	// return Fixed(this->toFloat() - fixed.toFloat());
 	Fixed tmp;
 	tmp.setRawBits(nb - fixed.getRawBits());
 	return tmp;
@@ -134,14 +129,10 @@ Fixed Fixed::operator*(const Fixed &fixed)
 	Fixed tmp;
 	tmp.setRawBits((static_cast<unsigned long>(nb) * fixed.getRawBits()) >> fractional);
 	return tmp;	
-	// return static_cast<float>((this->nb * fixed.getRawBits()) >> this->fractional) / (1 << fractional);
-	// return Fixed(this->toFloat() * fixed.toFloat());
 }
 
 Fixed Fixed::operator/(const Fixed &fixed)
 {
-	// return Fixed(this->toFloat() / fixed.toFloat());
-	// return Fixed (static_cast<float>(this->nb) / fixed.getRawBits());
 	Fixed tmp;
 	tmp.setRawBits((nb << fractional) / fixed.getRawBits());
 	return tmp;	
