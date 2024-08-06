@@ -26,10 +26,9 @@ Fixed::Fixed(const int i) : nb(i<<fractional)
 	std::cout << "Int constructor called\n";
 }
 
-Fixed::Fixed(const float f)
+Fixed::Fixed(const float f) : nb(roundf(f * (1 << fractional)))
 {
 	std::cout << "Float constructor called\n";
-	nb = roundf(f * (1 << fractional));
 }
 
 Fixed::Fixed(const Fixed& other)
@@ -43,12 +42,10 @@ float Fixed::toFloat( void ) const
 	return static_cast<float>(nb) / (1 << fractional);
 }
 
-// fix this it
 int Fixed::toInt( void ) const
 {
 	return static_cast<unsigned int>(nb) >> fractional;
 }
-
 
 Fixed& Fixed::operator=(const Fixed& other)
 {
