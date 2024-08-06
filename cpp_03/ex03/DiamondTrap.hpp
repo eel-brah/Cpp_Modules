@@ -20,9 +20,6 @@ class DiamondTrap : public FragTrap, public ScavTrap
 {
 	private:
 		std::string name;
-		// unsigned int hit_points;
-		// unsigned int energy_points;
-		// unsigned int attack_damage;
 	public:
 		DiamondTrap();
 		DiamondTrap(const std::string& name);
