@@ -44,7 +44,7 @@ int main()
 	// scav_2.takeDamage(15);
 	// scav_2.attack("Bob");
 	// scav_2.beRepaired(22);
-	
+
 	// ScavTrap scav_3(scav_2);
 	// scav_3.attack("Alice");
 	// scav_3.takeDamage(10);
@@ -66,7 +66,7 @@ int main()
 	// frag_2.takeDamage(15);
 	// frag_2.attack("Bob");
 	// frag_2.beRepaired(22);
-	
+
 	// FragTrap frag_3(frag_2);
 	// frag_3.attack("Alice");
 	// frag_3.takeDamage(10);
@@ -89,7 +89,7 @@ int main()
 	Diam_2.takeDamage(15);
 	Diam_2.attack("Bob");
 	Diam_2.beRepaired(22);
-	
+
 	DiamondTrap Diam_3(Diam_2);
 	Diam_3.attack("Alice");
 	Diam_3.takeDamage(10);

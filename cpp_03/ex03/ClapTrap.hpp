@@ -14,8 +14,6 @@
 #define CLAPTRAP_H_
 
 #include <iostream>
-#include <cstring>
-typedef std::string string;
 
 class ClapTrap
 {

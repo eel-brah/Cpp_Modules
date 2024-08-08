@@ -17,7 +17,8 @@ FragTrap::FragTrap()
 	std::cout << "\033[0;36mA FragTrap " << name << " created!\033[0m" << std::endl;
 	this->hit_points = 100;
 	this->attack_damage = 30;
-	this->energy_points = 100;
+	if (this->energy_points == 10)
+		this->energy_points = 100;
 }
 
 FragTrap::FragTrap(const std::string& name): ClapTrap(name)
@@ -25,7 +26,8 @@ FragTrap::FragTrap(const std::string& name): ClapTrap(name)
 	std::cout << "\033[0;36mFragTrap " << name << " created!\033[0m" << std::endl;
 	this->hit_points = 100;
 	this->attack_damage = 30;
-	this->energy_points = 100;
+	if (this->energy_points == 10)
+		this->energy_points = 100;
 }
 
 FragTrap::~FragTrap()
