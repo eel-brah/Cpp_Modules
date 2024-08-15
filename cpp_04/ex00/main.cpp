@@ -26,9 +26,6 @@ int main()
 	j->makeSound();
 	meta->makeSound();
 
-	std::cout << j->getType()<< std::endl;
-	j = i;
-	std::cout << j->getType()<< std::endl;
 	delete j;
 	delete i;
 	delete meta;
