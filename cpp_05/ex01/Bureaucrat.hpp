@@ -1,0 +1,40 @@
+#ifndef BUREAUCRAT_H_
+#define BUREAUCRAT_H_
+
+#include <exception>
+#include <iostream>
+class Form;
+
+class Bureaucrat {
+private:
+  const std::string name;
+  int grade;
+
+public:
+  Bureaucrat();
+  Bureaucrat(const std::string &name, int grade);
+  Bureaucrat(const std::string &message);
+  ~Bureaucrat();
+  Bureaucrat(const Bureaucrat &other);
+  Bureaucrat &operator=(const Bureaucrat &other);
+
+  std::string getName() const;
+  int getGrade() const;
+  void promotion();
+  void demotion();
+  // void signForm(const Form &form) const;
+  void signForm(Form &form);
+};
+std::ostream &operator<<(std::ostream &os, const Bureaucrat &Bureaucrat);
+
+class MyException : public std::exception {
+private:
+  std::string message;
+
+public:
+  MyException(const std::string &message);
+  ~MyException() throw();
+
+  const char *what() const throw();
+};
+#endif
