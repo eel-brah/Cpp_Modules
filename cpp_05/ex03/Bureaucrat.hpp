@@ -3,6 +3,7 @@
 
 #include <exception>
 #include <iostream>
+class AForm;
 
 class Bureaucrat {
 private:
@@ -17,19 +18,23 @@ public:
   Bureaucrat(const Bureaucrat &other);
   Bureaucrat &operator=(const Bureaucrat &other);
 
-  class GradeTooLowException : public std::exception {
-  public:
-    const char *what() const throw();
-  };
-  class GradeTooHighException : public std::exception {
-  public:
-    const char *what() const throw();
-  };
   std::string getName() const;
   int getGrade() const;
   void promotion();
   void demotion();
+  void signForm(AForm &form);
+  void executeForm(AForm const & form);
 };
 std::ostream &operator<<(std::ostream &os, const Bureaucrat &Bureaucrat);
 
+class MyException : public std::exception {
+private:
+  std::string message;
+
+public:
+  MyException(const std::string &message);
+  ~MyException() throw();
+
+  const char *what() const throw();
+};
 #endif

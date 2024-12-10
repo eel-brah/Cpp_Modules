@@ -1,13 +1,13 @@
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
 
 Bureaucrat::Bureaucrat() : name("Bureaucrat"), grade(150) {}
 
 Bureaucrat::Bureaucrat(const std::string &name, int grade_) : name(name) {
   if (grade_ < 1)
-    throw Bureaucrat::GradeTooHighException();
+    throw MyException("Bureaucrat::GradeTooHighException\n");
   else if (grade_ > 150)
-    throw Bureaucrat::GradeTooLowException();
+    throw MyException("Bureaucrat::GradeTooLowException\n");
   else
     grade = grade_;
 }
@@ -30,14 +30,14 @@ int Bureaucrat::getGrade() const { return grade; }
 
 void Bureaucrat::promotion() {
   if (grade - 1 < 1)
-    throw Bureaucrat::GradeTooHighException();
+    throw MyException("Bureaucrat::GradeTooHighException\n");
   else
     grade--;
 }
 
 void Bureaucrat::demotion() {
   if (grade + 1 > 150)
-    throw Bureaucrat::GradeTooLowException();
+    throw MyException("Bureaucrat::GradeTooLowException\n");
   else
     grade++;
 }
@@ -48,15 +48,12 @@ std::ostream &operator<<(std::ostream &os, const Bureaucrat &bureaucrat) {
   return os;
 }
 
-const char *Bureaucrat::GradeTooHighException::what() const throw() {
-  return "Grade too high!";
-}
+MyException::MyException(const std::string &message) : message(message) {}
+MyException::~MyException() throw() {}
 
-const char *Bureaucrat::GradeTooLowException::what() const throw() {
-  return "Grade too low!";
-}
+const char *MyException::what() const throw() { return message.c_str(); }
 
-void Bureaucrat::signForm(Form &form) {
+void Bureaucrat::signForm(AForm &form) {
   if (grade <= form.getSgrade()) {
     form.beSigned(*this);
     std::cout << name << " signed " << form.getName() << std::endl;
@@ -64,4 +61,9 @@ void Bureaucrat::signForm(Form &form) {
     std::cout << name << " couldn't sign " << form.getName()
               << " because his grade " << grade << " is lower then "
               << form.getSgrade() << std::endl;
+}
+void Bureaucrat::executeForm(AForm const &form) {
+  form.checkReq(*this);
+  form.execute(*this);
+  std::cout << getName() << " executed " << form.getName() << std::endl;
 }

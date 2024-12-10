@@ -6,9 +6,9 @@ Form::Form(const std::string &name, int sgrade_, int egrade_)
     : name(name), sign(false), sgrade(1), egrade(1) {
 
   if (sgrade < 1 || egrade_ < 1)
-    throw MyException("Form::GradeTooHighException\n");
+    throw Form::GradeTooHighException();
   else if (sgrade_ > 150 || egrade_ > 150)
-    throw MyException("Form::GradeTooLowException\n");
+    throw Form::GradeTooLowException();
   else {
     const int *p;
     p = &sgrade;
@@ -36,9 +36,13 @@ Form &Form::operator=(const Form &other) {
 }
 
 std::string Form::getName() const { return name; }
+
 bool Form::getSign() const { return sign; }
+
 int Form::getSgrade() const { return sgrade; }
+
 int Form::getEgrade() const { return egrade; }
+
 std::ostream &operator<<(std::ostream &os, const Form &form) {
   os << form.getName() << " is ";
   if (!form.getSign())
@@ -50,8 +54,16 @@ std::ostream &operator<<(std::ostream &os, const Form &form) {
 
 void Form::beSigned(const Bureaucrat &b) {
   if (b.getGrade() > sgrade) {
-    throw MyException("Form::GradeTooLowException\n");
+    throw Form::GradeTooLowException();
   } else {
     sign = true;
   }
+}
+
+const char *Form::GradeTooHighException::what() const throw() {
+  return "Grade too high!";
+}
+
+const char *Form::GradeTooLowException::what() const throw() {
+  return "Grade too low!";
 }

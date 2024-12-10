@@ -8,8 +8,8 @@ void test(int c) {
     try {
       Form f("FormA", 9, 9);
       std::cout << f;
-    } catch (MyException &e) {
-      std::cout << e.what();
+    } catch (std::exception &e) {
+      std::cout << e.what() << std::endl;
     }
     break;
   case 2:
@@ -17,8 +17,8 @@ void test(int c) {
     try {
       Form f("FormA", 990, 9);
       std::cout << f;
-    } catch (MyException &e) {
-      std::cout << e.what();
+    } catch (std::exception &e) {
+      std::cout << e.what() << std::endl;
     }
     break;
   case 3:
@@ -29,8 +29,9 @@ void test(int c) {
       std::cout << f;
       std::cout << b;
       f.beSigned(b);
-    } catch (MyException &e) {
-      std::cout << e.what();
+      std::cout << f;
+    } catch (std::exception &e) {
+      std::cout << e.what() << std::endl;
     }
     break;
   case 4:
@@ -41,8 +42,8 @@ void test(int c) {
       std::cout << f;
       std::cout << b;
       f.beSigned(b);
-    } catch (MyException &e) {
-      std::cout << e.what();
+    } catch (std::exception &e) {
+      std::cout << e.what() << std::endl;
     }
     break;
   case 5:
@@ -53,8 +54,8 @@ void test(int c) {
       std::cout << f;
       std::cout << b;
       b.signForm(f);
-    } catch (MyException &e) {
-      std::cout << e.what();
+    } catch (std::exception &e) {
+      std::cout << e.what() << std::endl;
     }
     break;
   }

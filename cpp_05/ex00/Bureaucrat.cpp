@@ -4,9 +4,9 @@ Bureaucrat::Bureaucrat() : name("Bureaucrat"), grade(150) {}
 
 Bureaucrat::Bureaucrat(const std::string &name, int grade_) : name(name) {
   if (grade_ < 1)
-    throw MyException("Bureaucrat::GradeTooHighException\n");
+    throw Bureaucrat::GradeTooHighException();
   else if (grade_ > 150)
-    throw MyException("Bureaucrat::GradeTooLowException\n");
+    throw Bureaucrat::GradeTooLowException();
   else
     grade = grade_;
 }
@@ -29,14 +29,14 @@ int Bureaucrat::getGrade() const { return grade; }
 
 void Bureaucrat::promotion() {
   if (grade - 1 < 1)
-    throw MyException("Bureaucrat::GradeTooHighException\n");
+    throw Bureaucrat::GradeTooHighException();
   else
     grade--;
 }
 
 void Bureaucrat::demotion() {
   if (grade + 1 > 150)
-    throw MyException("Bureaucrat::GradeTooLowException\n");
+    throw Bureaucrat::GradeTooLowException();
   else
     grade++;
 }
@@ -47,10 +47,13 @@ std::ostream& operator<<(std::ostream& os, const Bureaucrat& bureaucrat)
 	return os;
 }
 
-Bureaucrat::MyException::MyException(const std::string &message)
-    : message(message) {}
-Bureaucrat::MyException::~MyException() throw() {}
-
-const char *Bureaucrat::MyException::what() const throw() {
-  return message.c_str();
+const char *Bureaucrat::GradeTooHighException::what() const throw()
+{
+	return "Grade too high!";
 }
+
+const char *Bureaucrat::GradeTooLowException::what() const throw()
+{
+	return "Grade too low!";
+}
+
