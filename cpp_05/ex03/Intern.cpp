@@ -34,7 +34,10 @@ AForm *Intern::makeForm(const std::string &form, const std::string &target) {
       return (this->*forms[i])(target);
     }
   }
-  std::cout << "Invalid form name\n";
+  throw Intern::InvalidFormName();
   return NULL;
 }
 
+const char *Intern::InvalidFormName::what() const throw() {
+  return "Invalid form name!";
+}

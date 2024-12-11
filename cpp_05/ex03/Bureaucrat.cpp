@@ -5,9 +5,9 @@ Bureaucrat::Bureaucrat() : name("Bureaucrat"), grade(150) {}
 
 Bureaucrat::Bureaucrat(const std::string &name, int grade_) : name(name) {
   if (grade_ < 1)
-    throw MyException("Bureaucrat::GradeTooHighException\n");
+    throw Bureaucrat::GradeTooHighException();
   else if (grade_ > 150)
-    throw MyException("Bureaucrat::GradeTooLowException\n");
+    throw Bureaucrat::GradeTooLowException();
   else
     grade = grade_;
 }
@@ -30,14 +30,14 @@ int Bureaucrat::getGrade() const { return grade; }
 
 void Bureaucrat::promotion() {
   if (grade - 1 < 1)
-    throw MyException("Bureaucrat::GradeTooHighException\n");
+    throw Bureaucrat::GradeTooHighException();
   else
     grade--;
 }
 
 void Bureaucrat::demotion() {
   if (grade + 1 > 150)
-    throw MyException("Bureaucrat::GradeTooLowException\n");
+    throw Bureaucrat::GradeTooLowException();
   else
     grade++;
 }
@@ -48,10 +48,13 @@ std::ostream &operator<<(std::ostream &os, const Bureaucrat &bureaucrat) {
   return os;
 }
 
-MyException::MyException(const std::string &message) : message(message) {}
-MyException::~MyException() throw() {}
+const char *Bureaucrat::GradeTooHighException::what() const throw() {
+  return "Grade too high!";
+}
 
-const char *MyException::what() const throw() { return message.c_str(); }
+const char *Bureaucrat::GradeTooLowException::what() const throw() {
+  return "Grade too low!";
+}
 
 void Bureaucrat::signForm(AForm &form) {
   if (grade <= form.getSgrade()) {
@@ -62,8 +65,8 @@ void Bureaucrat::signForm(AForm &form) {
               << " because his grade " << grade << " is lower then "
               << form.getSgrade() << std::endl;
 }
+
 void Bureaucrat::executeForm(AForm const &form) {
-  form.checkReq(*this);
   form.execute(*this);
   std::cout << getName() << " executed " << form.getName() << std::endl;
 }

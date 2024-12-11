@@ -22,11 +22,14 @@ ShrubberyCreationForm::operator=(const ShrubberyCreationForm &other) {
   return *this;
 }
 
-void ShrubberyCreationForm::execute(Bureaucrat const &executor) const {
-  checkReq(executor);
+const char *ShrubberyCreationForm::ErrorOpeningTheFile::what() const throw() {
+  return "Error opening the file";
+}
+
+void ShrubberyCreationForm::perfomeAction() const {
   std::ofstream outFile(target + "_shrubbery");
   if (!outFile) {
-    throw MyException("ShrubberyCreationForm::ErrorOpeningTheFile\n");
+    throw ShrubberyCreationForm::ErrorOpeningTheFile();
   }
   outFile << "               ,@@@@@@@," << std::endl;
   outFile << "       ,,,.   ,@@@@@@/@@,  .oo8888o." << std::endl;

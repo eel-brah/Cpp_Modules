@@ -6,9 +6,9 @@ AForm::AForm(const std::string &name, int sgrade_, int egrade_)
     : name(name), sign(false), sgrade(1), egrade(1) {
 
   if (sgrade < 1 || egrade_ < 1)
-    throw MyException("AForm::GradeTooHighException\n");
+    throw AForm::GradeTooHighException();
   else if (sgrade_ > 150 || egrade_ > 150)
-    throw MyException("AForm::GradeTooLowException\n");
+    throw AForm::GradeTooLowException();
   else {
     const int *p;
     p = &sgrade;
@@ -36,9 +36,13 @@ AForm &AForm::operator=(const AForm &other) {
 }
 
 std::string AForm::getName() const { return name; }
+
 bool AForm::getSign() const { return sign; }
+
 int AForm::getSgrade() const { return sgrade; }
+
 int AForm::getEgrade() const { return egrade; }
+
 std::ostream &operator<<(std::ostream &os, const AForm &AForm) {
   os << AForm.getName() << " is ";
   if (!AForm.getSign())
@@ -50,17 +54,29 @@ std::ostream &operator<<(std::ostream &os, const AForm &AForm) {
 
 void AForm::beSigned(const Bureaucrat &b) {
   if (b.getGrade() > sgrade) {
-    throw MyException("AForm::GradeTooLowException\n");
+    throw AForm::GradeTooLowException();
   } else {
     sign = true;
   }
 }
 
-void AForm::checkReq(const Bureaucrat &b) const
-{
+const char *AForm::GradeTooHighException::what() const throw() {
+  return "Grade too high!";
+}
+
+const char *AForm::GradeTooLowException::what() const throw() {
+  return "Grade too low!";
+}
+
+const char *AForm::FormNotSign::what() const throw() {
+  return "Form not sign!";
+}
+
+void AForm::execute(Bureaucrat const &executor) const {
   if (!this->getSign()) {
-    throw MyException("AForm::FormNotSign\n");
-  } else if (b.getGrade() > this->getEgrade()) {
-    throw MyException("AForm::GradeTooLowException\n");
+    throw AForm::FormNotSign();
+  } else if (executor.getGrade() > this->getEgrade()) {
+    throw AForm::GradeTooLowException();
   }
+  perfomeAction();
 }

@@ -3,7 +3,7 @@
 int RobotomyRequestForm::robo_rate = 1;
 
 RobotomyRequestForm::RobotomyRequestForm()
-    : AForm("RobotomyRequestForm", 72, 45), target("target"){}
+    : AForm("RobotomyRequestForm", 72, 45), target("target") {}
 
 RobotomyRequestForm::RobotomyRequestForm(const std::string &target)
     : AForm("RobotomyRequestForm", 72, 45), target(target) {}
@@ -26,8 +26,7 @@ RobotomyRequestForm::operator=(const RobotomyRequestForm &other) {
   return *this;
 }
 
-void RobotomyRequestForm::execute(Bureaucrat const &executor) const {
-  checkReq(executor);
+void RobotomyRequestForm::perfomeAction() const {
   if (robo_rate % 2)
     std::cout << "BRRRRRRRRRRRR\n"
               << target << " has been robotomized successfully." << std::endl;
@@ -35,4 +34,3 @@ void RobotomyRequestForm::execute(Bureaucrat const &executor) const {
     std::cout << "Robotomy failed." << std::endl;
   robo_rate++;
 }
-
