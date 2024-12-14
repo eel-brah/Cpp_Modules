@@ -3,7 +3,6 @@
 
 #include "Bureaucrat.hpp"
 #include <iostream>
-#include <string>
 
 class AForm {
 private:
