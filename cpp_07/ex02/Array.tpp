@@ -47,13 +47,13 @@ template <typename T> T &Array<T>::operator[](unsigned int index) {
   if (index >= _size || arr == NULL) {
     throw std::out_of_range("Index out of bounds!");
   }
-  return arr[index]; // Return a reference to the element
+  return arr[index];
 }
 
 template <typename T> const T &Array<T>::operator[](unsigned int index) const {
   if (index >= _size || arr == NULL) {
     throw std::out_of_range("Index out of bounds!");
   }
-  return arr[index]; // Return a reference to the element (const version)
+  return arr[index];
 }
 
