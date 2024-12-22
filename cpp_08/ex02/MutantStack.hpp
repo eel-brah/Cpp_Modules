@@ -35,6 +35,10 @@ public:
   const_iterator begin() const { return stack.begin(); }
   iterator end() { return stack.end(); }
   const_iterator end() const { return stack.end(); }
+  iterator rbegin() { return stack.rbegin(); }
+  const_iterator rbegin() const { return stack.rbegin(); }
+  iterator rend() { return stack.rend(); }
+  const_iterator rend() const { return stack.rend(); }
 
   // void emplace();
   // void swap();
