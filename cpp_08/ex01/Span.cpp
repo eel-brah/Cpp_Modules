@@ -1,4 +1,5 @@
 #include "Span.hpp"
+#include <iostream>
 
 Span::Span() : size(0) {}
 Span::Span(unsigned int n) : size(n) {}
@@ -48,13 +49,17 @@ int Span::shortestSpan() {
 }
 
 int Span::longestSpan() {
-  std::vector<int> tmpV;
+  // std::vector<int> tmpV;
 
   if (v.size() < 2)
     throw std::runtime_error("Not enough numbers");
 
-  tmpV = v;
-  std::sort(tmpV.begin(), tmpV.end());
-
-  return tmpV[tmpV.size() - 1] - tmpV[0];
+  // tmpV = v;
+  // std::nth_element(tmpV.begin(), tmpV.end() - 1, tmpV.end());
+  // std::nth_element(tmpV.begin(), tmpV.begin(), tmpV.end() - 1);
+  int max = *std::max_element(v.begin(), v.end());
+  int min = *std::min_element(v.begin(), v.end());
+  //
+  // return tmpV[tmpV.size() - 1] - tmpV[0];
+  return max - min;
 }

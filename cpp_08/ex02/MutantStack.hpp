@@ -19,8 +19,12 @@ public:
     stack.insert(stack.begin(), container.begin(), container.end());
   }
 
-  typedef typename std::deque<T>::iterator iterator;
-  typedef typename std::deque<T>::const_iterator const_iterator;
+  typedef typename std::deque<T>::container_type::iterator iterator;
+  typedef
+      typename std::deque<T>::container_type::reverse_iterator reverse_iterator;
+  typedef typename std::deque<T>::container_type::const_iterator const_iterator;
+  typedef typename std::deque<T>::container_type::const_reverse_iterator
+      const_reverse_iterator;
 
   operator std::stack<T>();
 
@@ -32,13 +36,13 @@ public:
   void pop();
 
   iterator begin() { return stack.begin(); }
-  const_iterator begin() const { return stack.begin(); }
+  const_iterator cbegin() const { return stack.cbegin(); }
   iterator end() { return stack.end(); }
-  const_iterator end() const { return stack.end(); }
-  iterator rbegin() { return stack.rbegin(); }
-  const_iterator rbegin() const { return stack.rbegin(); }
-  iterator rend() { return stack.rend(); }
-  const_iterator rend() const { return stack.rend(); }
+  const_iterator cend() const { return stack.cend(); }
+  reverse_iterator rbegin() { return stack.rbegin(); }
+  const_reverse_iterator crbegin() const { return stack.crbegin(); }
+  reverse_iterator rend() { return stack.rend(); }
+  const_reverse_iterator crend() const { return stack.crend(); }
 
   // void emplace();
   // void swap();
