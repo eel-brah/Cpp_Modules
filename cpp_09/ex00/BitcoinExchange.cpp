@@ -13,9 +13,6 @@ BitcoinExchange::BitcoinExchange(const char *database) {
 
   std::getline(file, line);
   while (std::getline(file, line)) {
-    // std::stringstream ss(line);
-    // std::getline(ss, price, ',');
-    // std::getline(ss, date, ',');
     size_t comma = line.find(',');
     date = line.substr(0, comma);
     price = line.substr(comma + 1);
@@ -44,12 +41,17 @@ void BitcoinExchange::print() {
 }
 
 double BitcoinExchange::get_price(std::string date) {
-  // if no date get the closest date
- std::map<std::string, double>::iterator it = db.find(date);
-    if (it != db.end()) {
-        return it->second;
-    } else {
-        std::cout << "Key not found!" << std::endl;
-    }
-  return 0;
+  std::map<std::string, double>::iterator it = db.lower_bound(date);
+  if (it == db.end()) {
+    std::cout << "Error: bad date => " << date << std::endl;
+    return -1;
+  }
+  if (it->first == date)
+    return it->second;
+  if (it != db.begin()) {
+    it--;
+    return it->second;
+  }
+  std::cout << "Error: bad date => " << date << std::endl;
+  return -1;
 }
