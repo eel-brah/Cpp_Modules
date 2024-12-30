@@ -15,19 +15,19 @@
 
 #include <iostream>
 
-class Brain
-{
-	private:
-		std::string ideas[100];
+class Brain {
+private:
+  std::string ideas[100];
+  unsigned int ideaNbr;
 
-	public:
-		Brain();
-		~Brain();
-		Brain(const Brain& other);
-		Brain& operator=(const Brain& other);
-		
-		void add_idea(const std::string& idea);
-		std::string get_idea(const unsigned int i);
+public:
+  Brain();
+  ~Brain();
+  Brain(const Brain &other);
+  Brain &operator=(const Brain &other);
+
+  void add_idea(const std::string &idea);
+  std::string get_idea(const unsigned int i);
 };
 
 #endif

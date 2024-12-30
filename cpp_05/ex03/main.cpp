@@ -27,8 +27,8 @@ void test(int c) {
       Intern someRandomIntern;
       AForm *rrf;
       rrf = someRandomIntern.makeForm("nonexest form", "Bender");
-      // if (!rrf)
-      //   return;
+      if (!rrf)
+        return;
       Bureaucrat b("Bob", 2);
       std::cout << b;
       rrf->beSigned(b);

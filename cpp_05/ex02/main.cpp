@@ -1,7 +1,7 @@
 #include "Bureaucrat.hpp"
-#include "ShrubberyCreationForm.hpp"
-#include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "ShrubberyCreationForm.hpp"
 
 void test(int c) {
   switch (c) {
@@ -11,8 +11,10 @@ void test(int c) {
       ShrubberyCreationForm s("target");
       Bureaucrat b("Bob", 12);
       std::cout << b;
+      std::cout << s;
       s.beSigned(b);
       s.execute(b);
+      std::cout << s;
     } catch (std::exception &e) {
       std::cout << e.what() << std::endl;
     }

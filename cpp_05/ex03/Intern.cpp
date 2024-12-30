@@ -31,7 +31,12 @@ AForm *Intern::makeForm(const std::string &form, const std::string &target) {
   for (int i = 0; i < 3; ++i) {
     if (form == forms_name[i]) {
       std::cout << "Intern creates " << form << std::endl;
-      return (this->*forms[i])(target);
+      try {
+        return (this->*forms[i])(target);
+      } catch (std::exception &e) {
+        std::cout << e.what() << std::endl;
+        return NULL;
+      }
     }
   }
   throw Intern::InvalidFormName();

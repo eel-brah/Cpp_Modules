@@ -7,7 +7,7 @@ void test(int c) {
     try {
       Bureaucrat b("bob", 9);
       std::cout << b;
-    } catch (std::exception & e) {
+    } catch (std::exception &e) {
       std::cout << e.what() << std::endl;
     }
     break;
@@ -16,7 +16,7 @@ void test(int c) {
     try {
       Bureaucrat b("bob", 0);
       std::cout << b;
-    } catch (std::exception & e) {
+    } catch (std::exception &e) {
       std::cout << e.what() << std::endl;
     }
     break;
@@ -25,7 +25,7 @@ void test(int c) {
     try {
       Bureaucrat b("bob", 152);
       std::cout << b;
-    } catch (std::exception & e) {
+    } catch (std::exception &e) {
       std::cout << e.what() << std::endl;
     }
     break;
@@ -36,7 +36,7 @@ void test(int c) {
       std::cout << b;
       b.promotion();
       std::cout << b;
-    } catch (std::exception & e) {
+    } catch (std::exception &e) {
       std::cout << e.what() << std::endl;
     }
     break;
@@ -47,7 +47,7 @@ void test(int c) {
       std::cout << b;
       b.promotion();
       std::cout << b;
-    } catch (std::exception & e) {
+    } catch (std::exception &e) {
       std::cout << e.what() << std::endl;
     }
     break;

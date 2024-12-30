@@ -41,19 +41,16 @@ void Bureaucrat::demotion() {
     grade++;
 }
 
-std::ostream& operator<<(std::ostream& os, const Bureaucrat& bureaucrat)
-{
-	os << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade() << "." << std::endl;
-	return os;
+std::ostream &operator<<(std::ostream &os, const Bureaucrat &bureaucrat) {
+  os << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade()
+     << "." << std::endl;
+  return os;
 }
 
-const char *Bureaucrat::GradeTooHighException::what() const throw()
-{
-	return "Grade too high!";
+const char *Bureaucrat::GradeTooHighException::what() const throw() {
+  return "Grade too high!";
 }
 
-const char *Bureaucrat::GradeTooLowException::what() const throw()
-{
-	return "Grade too low!";
+const char *Bureaucrat::GradeTooLowException::what() const throw() {
+  return "Grade too low!";
 }
-

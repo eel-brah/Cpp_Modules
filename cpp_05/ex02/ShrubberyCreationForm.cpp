@@ -27,7 +27,7 @@ const char *ShrubberyCreationForm::ErrorOpeningTheFile::what() const throw() {
 }
 
 void ShrubberyCreationForm::perfomeAction() const {
-  std::ofstream outFile(target + "_shrubbery");
+  std::ofstream outFile((target + "_shrubbery").c_str());
   if (!outFile) {
     throw ShrubberyCreationForm::ErrorOpeningTheFile();
   }

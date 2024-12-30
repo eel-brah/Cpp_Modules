@@ -5,7 +5,7 @@ Form::Form() : name("FormX"), sign(false), sgrade(1), egrade(1) {}
 Form::Form(const std::string &name, int sgrade_, int egrade_)
     : name(name), sign(false), sgrade(1), egrade(1) {
 
-  if (sgrade < 1 || egrade_ < 1)
+  if (sgrade_ < 1 || egrade_ < 1)
     throw Form::GradeTooHighException();
   else if (sgrade_ > 150 || egrade_ > 150)
     throw Form::GradeTooLowException();
