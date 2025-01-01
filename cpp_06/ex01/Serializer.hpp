@@ -1,8 +1,9 @@
 #ifndef SERIALIZER_H_
 #define SERIALIZER_H_
 
-#include <cstdint>
 #include "Data.hpp"
+
+#define uintptr_t unsigned long
 
 class Serializer {
 private:

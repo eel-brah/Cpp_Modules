@@ -5,6 +5,8 @@
 #include <climits>
 #include <cmath>
 #include <cstdlib>
+#include <cstring>
+#include <cerrno>
 #include <iostream>
 
 bool is_char(char *s);

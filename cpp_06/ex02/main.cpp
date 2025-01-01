@@ -37,18 +37,21 @@ void identify(Base &p) {
     A &a = dynamic_cast<A &>(p);
     (void)a;
     std::cout << "Class A" << std::endl;
+    return ;
   } catch (std::exception &e) {
   }
   try {
     B &b = dynamic_cast<B &>(p);
     (void)b;
     std::cout << "Class B" << std::endl;
+    return ;
   } catch (std::exception &e) {
   }
   try {
     C &c = dynamic_cast<C &>(p);
     (void)c;
     std::cout << "Class C" << std::endl;
+    return ;
   } catch (std::exception &e) {
   }
 }
