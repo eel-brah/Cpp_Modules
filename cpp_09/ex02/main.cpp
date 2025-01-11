@@ -58,7 +58,7 @@ bool fill_deque(dequeInt &c, char **args) {
 
 template <typename T> bool comp(T a, T b) { return *a < *b; }
 
-template <typename iter> void merge_insertion(iter b, iter e) {
+void merge_insertion(Giter<dequeIntIter> b, Giter<dequeIntIter> e) {
 
   unsigned int size = std::distance(b, e);
   std::cout << "Size: " << size << std::endl;
@@ -66,9 +66,9 @@ template <typename iter> void merge_insertion(iter b, iter e) {
     return;
   // is there an unpaired element
   bool odd = size % 2;
-  iter end = odd ? e - 1 : e;
+  Giter<dequeIntIter> end = odd ? e - 1 : e;
   // sort the pairs
-  for (iter it = b; it != end; it += 2) {
+  for (Giter<dequeIntIter> it = b; it != end; it += 2) {
     std::cout << it[0] << " " << it[1] << "\n";
     if (it[0] > it[1])
       ::swap(it, it + 1);
@@ -80,54 +80,75 @@ template <typename iter> void merge_insertion(iter b, iter e) {
 
   std::cout << "=============\n";
   // separate the main and pend chains
-  std::deque<iter> main;
-  std::deque<iter> pend;
+  std::deque<Giter<dequeIntIter> > main;
+  std::deque<Giter<dequeIntIter> > pend;
 
   main.push_back(b);
   main.push_back(b + 1);
 
-  for (iter it = b + 2; it != end; it += 2) {
+  for (Giter<dequeIntIter> it = b + 2; it != end; it += 2) {
     main.push_back(it + 1);
     pend.push_back(it);
   }
 
-  if (odd)
-    pend.push_back(end);
+  // if (odd)
+  //   pend.push_back(end);
+
   // std::cout << "main: ";
   // print_deque_iter(main);
   //
   // std::cout << "pend: ";
   // print_deque_iter(pend);
-  //
+  
   long prev = jacobsthal_number(1);
   long curr;
   long diff;
   int inserted = 0;
-  int offset = 0; 
+  int offset = 0;
   for (long n = 2;; n++) {
     curr = jacobsthal_number(n);
     diff = curr - prev;
-    if (diff > pend.size())
+    if (diff > static_cast<long>(pend.size()))
       break;
-    typename std::deque<iter>::iterator it = pend.begin();
-    typename std::deque<iter>::iterator bound =
+    std::deque<Giter<dequeIntIter> >::iterator it = pend.begin();
+    std::deque<Giter<dequeIntIter> >::iterator bound =
         main.begin() + (curr + inserted);
     it += diff;
     int inserions_nbr = diff;
     while (inserions_nbr) {
-      typename std::deque<iter>::iterator insertion_pos =
-          std::upper_bound(main.begin(), bound, *it, comp<iter>);
-      typename std::deque<iter>::iterator inserted_pos =
+      std::deque<Giter<dequeIntIter> >::iterator insertion_pos =
+          std::upper_bound(main.begin(), bound, *it, comp<Giter<dequeIntIter> >);
+      std::deque<Giter<dequeIntIter> >::iterator inserted_pos =
           main.insert(insertion_pos, *it);
       it = pend.erase(it);
       it -= 1;
       offset += (inserted_pos - main.begin()) == curr + inserted;
       bound = main.begin() + (curr + inserted - offset);
+      inserions_nbr--;
     }
     prev = curr;
     inserted += diff;
     offset = 0;
   }
+
+  for (int i = 0; i < static_cast<int>( pend.size()); i++) {
+    std::deque<Giter<dequeIntIter> >::iterator curr_pend = pend.begin() + i;
+    std::deque<Giter<dequeIntIter> >::iterator curr_bound =
+        main.begin() + (main.size() - pend.size() + i);
+    std::deque<Giter<dequeIntIter> >::iterator insertion_pos =
+        std::upper_bound(main.begin(), curr_bound, *curr_pend, comp<Giter<dequeIntIter> >);
+
+    main.insert(insertion_pos, *curr_pend);
+  }
+
+  if (odd) {
+    std::deque<Giter<dequeIntIter> >::iterator insertion_pos =
+        std::upper_bound(main.begin(), main.end(), end, comp<Giter<dequeIntIter> >);
+    main.insert(insertion_pos, end);
+  }
+
+  // std::cout << "LL" << std::endl;
+  print_deque_iter(main);
 }
 
 int main(int ac, char *av[]) {
