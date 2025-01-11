@@ -23,7 +23,9 @@ template <typename Iter> void print_deque(Giter<Iter> b, Giter<Iter> e) {
 template <typename Iter> void print_deque_iter(std::deque<Iter> b) {
   for (typename std::deque<Iter>::iterator it = b.begin(); it != b.end();
        ++it) {
-    std::cout << *it->iter() << " ";
+    dequeIntIter t = it->iter();
+    for (unsigned int i = 0; i < it->iter_size() ; i++)
+      std::cout << t[i] << " ";
   }
   std::cout << std::endl;
 }
@@ -73,12 +75,12 @@ void merge_insertion(Giter<dequeIntIter> b, Giter<dequeIntIter> e) {
     if (it[0] > it[1])
       ::swap(it, it + 1);
   }
-  print_deque(b, e);
+  // print_deque(b, e);
 
   // recursively sort the pairs
   merge_insertion(make_pair_iterator(b, 2), make_pair_iterator(end, 2));
 
-  std::cout << "=============\n";
+  // std::cout << "=============\n";
   // separate the main and pend chains
   std::deque<Giter<dequeIntIter> > main;
   std::deque<Giter<dequeIntIter> > pend;
@@ -108,7 +110,7 @@ void merge_insertion(Giter<dequeIntIter> b, Giter<dequeIntIter> e) {
   for (long n = 2;; n++) {
     curr = jacobsthal_number(n);
     diff = curr - prev;
-    if (diff > static_cast<long>(pend.size()))
+    if (diff >= static_cast<long>(pend.size()))
       break;
     std::deque<Giter<dequeIntIter> >::iterator it = pend.begin();
     std::deque<Giter<dequeIntIter> >::iterator bound =
@@ -116,6 +118,7 @@ void merge_insertion(Giter<dequeIntIter> b, Giter<dequeIntIter> e) {
     it += diff;
     int inserions_nbr = diff;
     while (inserions_nbr) {
+
       std::deque<Giter<dequeIntIter> >::iterator insertion_pos =
           std::upper_bound(main.begin(), bound, *it, comp<Giter<dequeIntIter> >);
       std::deque<Giter<dequeIntIter> >::iterator inserted_pos =
@@ -130,7 +133,7 @@ void merge_insertion(Giter<dequeIntIter> b, Giter<dequeIntIter> e) {
     inserted += diff;
     offset = 0;
   }
-
+//
   for (int i = 0; i < static_cast<int>( pend.size()); i++) {
     std::deque<Giter<dequeIntIter> >::iterator curr_pend = pend.begin() + i;
     std::deque<Giter<dequeIntIter> >::iterator curr_bound =
@@ -148,7 +151,46 @@ void merge_insertion(Giter<dequeIntIter> b, Giter<dequeIntIter> e) {
   }
 
   // std::cout << "LL" << std::endl;
-  print_deque_iter(main);
+  // print_deque_iter(main);
+  std::deque<unsigned int> cache;
+  for (unsigned int i = 0; i < main.size(); i++)
+  {
+    dequeIntIter begin = main[i].iter();
+    dequeIntIter end = begin + main[i].iter_size();
+    while (begin != end)
+    {
+      // std::cout << *begin << std::endl;
+      cache.push_back(*begin);
+      begin++;
+    }
+    // std::copy(begin, end, std::back_inserter(cache));
+  }
+   dequeIntIter in = b.iter();
+
+
+  std::deque<unsigned int>::iterator begin = cache.begin();
+  std::deque<unsigned int>::iterator eend = cache.end();
+  int k = 0;
+  while (begin != eend)
+  {
+    // std::cout << "==" << **begin << std::endl;
+    in[k] = *begin;
+    // std::cout << "+==" << in[k] << std::endl;
+    begin++;
+    k++;
+  }
+  // std::cout << "hhhhh" << in[0] << std::endl;
+  // std::cout << "hhhhh" << *begin[0] << std::endl;
+  (void) in;
+  // for (int i = 0; begin != eend; i++)
+  // {
+  //   in[i] = **begin;
+  //   std::cout << "==" <<**begin<< std::endl;
+  //    begin++;
+  //   //  begin++;
+  // }
+  // std::copy(cache.begin(), cache.end(), b.iter());
+  // print_deque_iter(main);
 }
 
 int main(int ac, char *av[]) {
@@ -171,5 +213,6 @@ int main(int ac, char *av[]) {
   Giter<dequeIntIter> e(c1.end(), 1);
 
   merge_insertion(b, e);
+  print_deque(b, e);
   return 0;
 }
