@@ -2,12 +2,12 @@
 #define GITER_H_
 
 #include <algorithm>
+
 template <typename Iter> class Giter {
 private:
   Iter it;
   unsigned int size;
 
-  // TODO:
   Giter() {}
 
 public:
@@ -35,15 +35,6 @@ public:
   Iter iter() const { return it; }
   unsigned int iter_size() const { return size; }
 
-  // Giter &operator++() {
-  //   it += size;
-  //   return *this;
-  // }
-  // Giter operator++(int) {
-  //   Giter tmp = *this;
-  //   operator++();
-  //   return tmp;
-  // }
   Giter &operator+=(unsigned int inc) {
     it += size * inc;
     return *this;
@@ -59,9 +50,6 @@ public:
   // Giter operator+(const unsigned int i) { return it += i; }
   bool operator!=(const Giter &giter) const { return this->it != giter.iter(); }
 
-  // unsigned int operator[](unsigned int pos) {
-  //   return it[pos * size + size - 1];
-  // }
   unsigned int operator[](unsigned int pos) const {
     return it[pos * size + size - 1];
   }
@@ -74,15 +62,10 @@ template <typename Iter> Giter<Iter> operator-(Giter<Iter> it, unsigned int i) {
   return it -= i;
 }
 
-template <typename iter> void swap(Giter<iter> it1, Giter<iter> it2) {
+template <typename iter> void gswap(Giter<iter> it1, Giter<iter> it2) {
   std::swap_ranges(it1.iter(), it1.iter() + it1.iter_size(), it2.iter());
 }
 
-template <typename iter>
-Giter<iter> make_pair_iterator(iter it, unsigned int size) {
-  Giter<iter> t(it, size);
-  return it;
-}
 template <typename iter>
 Giter<iter> make_pair_iterator(Giter<iter> it, unsigned int size) {
   Giter<iter> t(it.iter(), size * it.iter_size());
