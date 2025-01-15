@@ -44,14 +44,14 @@ void PmergeMe::merge_insertion_vec(giterVec b, giterVec e) {
   if (odd)
     pend.push_back(end);
 
-  // insert pend to main using binary inserion
+  // insert pend to main using binary inserion using jacobsthal numbers
   long prev = jacobsthal_number(1);
   long curr;
   long diff;
   int inserted = 0;
   int offset;
   int inserions_nbr;
-  for (long n = 2;; n++) {
+  for (int n = 2;; n++) {
     curr = jacobsthal_number(n);
     diff = curr - prev;
     if (diff > static_cast<long>(pend.size()))
@@ -135,14 +135,14 @@ void PmergeMe::merge_insertion_deque(giterDeque b, giterDeque e) {
   if (odd)
     pend.push_back(end);
 
-  // insert pend to main using binary inserion
+  // insert pend to main using binary inserion using jacobsthal numbers
   long prev = jacobsthal_number(1);
   long curr;
   long diff;
   int inserted = 0;
   int offset;
   int inserions_nbr;
-  for (long n = 2;; n++) {
+  for (int n = 2;; n++) {
     curr = jacobsthal_number(n);
     diff = curr - prev;
     if (diff > static_cast<long>(pend.size()))

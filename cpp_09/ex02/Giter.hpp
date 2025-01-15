@@ -46,19 +46,19 @@ public:
   unsigned int operator-(const Giter &giter) {
     return (it - giter.iter()) / size;
   }
-  // Giter operator-(const unsigned int i) { return it -= i; }
-  // Giter operator+(const unsigned int i) { return it += i; }
   bool operator!=(const Giter &giter) const { return this->it != giter.iter(); }
 
   unsigned int operator[](unsigned int pos) const {
     return it[pos * size + size - 1];
   }
 };
-template <typename Iter> Giter<Iter> operator+(Giter<Iter> it, unsigned int i) {
+template <typename Iter> Giter<Iter> operator+(Giter<Iter> it, unsigned int
+i) {
   return it += i;
 }
 
-template <typename Iter> Giter<Iter> operator-(Giter<Iter> it, unsigned int i) {
+template <typename Iter> Giter<Iter> operator-(Giter<Iter> it, unsigned int
+i) {
   return it -= i;
 }
 
