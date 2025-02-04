@@ -21,6 +21,9 @@ public:
   AForm *makeShrubbeyCreation(const std::string &target);
   AForm *makePresidentialPardon(const std::string &target);
   AForm *makeRobotomyRequest(const std::string &target);
+
+AForm *f2(AForm *(Intern::*forms)(const std::string &target), const std::string &form, const std::string &target);
+AForm *f1(AForm *(Intern::*forms)(const std::string &target), const std::string &form, const std::string &target);
 };
 
 #endif
